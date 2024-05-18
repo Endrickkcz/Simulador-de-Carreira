@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Carreira de Jogador de Futebol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type="button"], input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="button"]:hover, input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="start-container">
+        <h1>Simulador de Carreira de Jogador de Futebol</h1>
+        <label for="nome">Digite seu nome e sobrenome:</label><br>
+        <input type="text" id="nome" name="nome" required><br>
+        <input type="button" value="Começar a carreira" onclick="startGame()">
+    </div>
+
+    <div class="container hidden" id="game-container">
+        <h1 id="game-title">Bem-vindo, <span id="player-name"></span>!</h1>
+        <div id="game-text"></div>
+        <div id="game-choices"></div>
+    </div>
+
+    <script>
+        let playerName = '';
+
+        function startGame() {
+            playerName = document.getElementById('nome').value;
+            if (playerName.trim() === '') {
+                alert('Por favor, digite seu nome.');
+                return;
+            }
+            document.getElementById('player-name').textContent = playerName;
+            document.getElementById('start-container').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('hidden');
+            showScenario(1);
+        }
+
+        function showScenario(scenario) {
+            const gameText = document.getElementById('game-text');
+            const gameChoices = document.getElementById('game-choices');
+
+            gameChoices.innerHTML = '';
+
+            switch (scenario) {
+                case 1:
+                    gameText.innerHTML = `
+                        <p>Você está começando sua carreira como jogador de futebol. Você tem a oportunidade de se juntar a dois times locais. Qual você escolhe?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Time A" onclick="showScenario(2)">
+                        <input type="button" value="Time B" onclick="showScenario(3)">
+                    `;
+                    break;
+                case 2:
+                    gameText.innerHTML = `
+                        <p>Você escolheu o Time A. Após alguns meses de treino, você tem a chance de jogar sua primeira partida oficial. Você prefere jogar como atacante ou defensor?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Atacante" onclick="showScenario(4)">
+                        <input type="button" value="Defensor" onclick="showScenario(5)">
+                    `;
+                    break;
+                case 3:
+                    gameText.innerHTML = `
+                        <p>Você escolheu o Time B. Após alguns meses de treino, você tem a chance de jogar sua primeira partida oficial. Você prefere jogar como meia ou goleiro?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Meia" onclick="showScenario(6)">
+                        <input type="button" value="Goleiro" onclick="showScenario(7)">
+                    `;
+                    break;
+                case 4:
+                    gameText.innerHTML = `
+                        <p>Como atacante, você marcou dois gols na sua primeira partida! Você está ganhando reconhecimento. Agora, você tem a chance de se transferir para um time maior. Você aceita a proposta?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Aceitar" onclick="showScenario(8)">
+                        <input type="button" value="Recusar" onclick="showScenario(9)">
+                    `;
+                    break;
+                case 5:
+                    gameText.innerHTML = `
+                        <p>Como defensor, você ajudou seu time a manter o placar em 0 a 0. Você está ganhando reconhecimento. Agora, você tem a chance de se transferir para um time maior. Você aceita a proposta?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Aceitar" onclick="showScenario(8)">
+                        <input type="button" value="Recusar" onclick="showScenario(9)">
+                    `;
+                    break;
+                case 6:
+                    gameText.innerHTML = `
+                        <p>Como meia, você deu duas assistências na sua primeira partida! Você está ganhando reconhecimento. Agora, você tem a chance de se transferir para um time maior. Você aceita a proposta?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Aceitar" onclick="showScenario(8)">
+                        <input type="button" value="Recusar" onclick="showScenario(9)">
+                    `;
+                    break;
+                case 7:
+                    gameText.innerHTML = `
+                        <p>Como goleiro, você defendeu um pênalti crucial na sua primeira partida! Você está ganhando reconhecimento. Agora, você tem a chance de se transferir para um time maior. Você aceita a proposta?</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Aceitar" onclick="showScenario(8)">
+                        <input type="button" value="Recusar" onclick="showScenario(9)">
+                    `;
+                    break;
+                case 8:
+                    gameText.innerHTML = `
+                        <p>Você aceitou a proposta e se transferiu para um time maior. Sua carreira está decolando e você está a caminho de se tornar uma estrela do futebol!</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Recomeçar" onclick="resetGame()">
+                    `;
+                    break;
+                case 9:
+                    gameText.innerHTML = `
+                        <p>Você recusou a proposta e decidiu ficar no seu time atual. Mesmo assim, você continua se destacando e se tornando um jogador importante para o time!</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Recomeçar" onclick="resetGame()">
+                    `;
+                    break;
+                default:
+                    gameText.innerHTML = `
+                        <p>Bem-vindo ao simulador de carreira de jogador de futebol!</p>
+                    `;
+                    gameChoices.innerHTML = `
+                        <input type="button" value="Começar a carreira" onclick="startGame()">
+                    `;
+                    break;
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('start-container').classList.remove('hidden');
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('nome').value = '';
+        }
+    </script>
+</body>
+</html>
